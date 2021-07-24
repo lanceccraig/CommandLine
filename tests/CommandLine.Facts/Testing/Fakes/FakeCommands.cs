@@ -2,6 +2,7 @@ using System;
 using System.CommandLine;
 using System.Linq;
 using Ardalis.SmartEnum;
+using LanceC.CommandLine.Parsing;
 
 namespace LanceC.CommandLine.Facts.Testing.Fakes
 {

@@ -1,6 +1,6 @@
 using Ardalis.SmartEnum;
 
-namespace LanceC.CommandLine
+namespace LanceC.CommandLine.Parsing
 {
     /// <summary>
     /// Defines an enumeration value that can be parsed from the command line.

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Ardalis.SmartEnum;
+using LanceC.CommandLine.Parsing;
 
 namespace LanceC.CommandLine.Help
 {

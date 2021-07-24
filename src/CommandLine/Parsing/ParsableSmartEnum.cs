@@ -1,6 +1,6 @@
 using Ardalis.SmartEnum;
 
-namespace LanceC.CommandLine
+namespace LanceC.CommandLine.Parsing
 {
     public class ParsableSmartEnum<TEnum> : IParsableSmartEnum<TEnum>
         where TEnum : SmartEnum<TEnum>
