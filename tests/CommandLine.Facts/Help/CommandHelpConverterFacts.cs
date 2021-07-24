@@ -7,7 +7,7 @@ namespace LanceC.CommandLine.Facts.Help
 {
     public class CommandHelpConverterFacts
     {
-        public class TheConvertMethod
+        public class TheConvertMethod : CommandHelpConverterFacts
         {
             [Fact]
             public void ConvertsGroupToCommandHelp()

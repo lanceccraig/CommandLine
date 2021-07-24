@@ -46,6 +46,31 @@ namespace LanceC.CommandLine.Facts.Help
             }
 
             [Fact]
+            public void WritesSubGroupsForGroupWithoutGlobalOptions()
+            {
+                // Arrange
+                var command = FakeCommands.GetWithoutGlobalOptions("testhost");
+                var sut = CreateSystemUnderTest();
+
+                var expected = new StringBuilder()
+                    .AppendLine()
+                    .AppendLine("Group")
+                    .AppendLine("    testhost : Fake Executable")
+                    .AppendLine()
+                    .AppendLine("Sub Groups:")
+                    .AppendLine("    sg : Fake SubGroup")
+                    .AppendLine()
+                    .ToString();
+
+                // Act
+                sut.Write(command);
+                var actual = _console.OutResult;
+
+                // Assert
+                Assert.Equal(expected, actual);
+            }
+
+            [Fact]
             public void WritesSubCommandsForGroup()
             {
                 // Arrange
@@ -166,6 +191,54 @@ namespace LanceC.CommandLine.Facts.Help
                     .AppendLine("    -h /h --help -? /?            : Show help and usage information.")
                     .AppendLine()
                     .ToString();
+
+                // Act
+                sut.Write(command);
+                var actual = _console.OutResult;
+
+                // Assert
+                Assert.Equal(expected, actual);
+            }
+
+            [Fact]
+            public void WritesOptionsForCommandWithoutGlobalOptions()
+            {
+                // Arrange
+                var command = FakeCommands.GetWithoutGlobalOptions("testhost sg c3");
+                var sut = CreateSystemUnderTest();
+
+                var expected = new StringBuilder()
+                    .AppendLine()
+                    .AppendLine("Command")
+                    .AppendLine("    testhost sg c3 : Fake Command Three")
+                    .AppendLine()
+                    .AppendLine("Options:")
+                    .AppendLine("    --foo -f [Required] : Foo")
+                    .AppendLine("    --bar               : Bar")
+                    .AppendLine("                          Accepted values: false, true")
+                    .AppendLine("    -b                  : Baz")
+                    .AppendLine("                          Accepted values: Foo, Bar, Baz")
+                    .AppendLine("    --qux               : Qux")
+                    .AppendLine("                          Accepted values: Foo, Bar, Baz")
+                    .AppendLine()
+                    .ToString();
+
+                // Act
+                sut.Write(command);
+                var actual = _console.OutResult;
+
+                // Assert
+                Assert.Equal(expected, actual);
+            }
+
+            [Fact]
+            public void DoesNotWriteHiddenCommand()
+            {
+                // Arrange
+                var command = FakeCommands.Get("testhost sg c4");
+                var sut = CreateSystemUnderTest();
+
+                var expected = string.Empty;
 
                 // Act
                 sut.Write(command);

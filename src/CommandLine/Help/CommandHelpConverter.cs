@@ -172,27 +172,19 @@ namespace LanceC.CommandLine.Help
         private static IReadOnlyCollection<string> GetAcceptedValuesForSmartEnum(Type parsableEnumerationType)
         {
             var enumerationType = parsableEnumerationType.GenericTypeArguments
-                .FirstOrDefault(genericArgumentType =>
+                .Single(genericArgumentType =>
                     genericArgumentType.BaseType is not null &&
                     genericArgumentType.BaseType.GetGenericTypeDefinition() == typeof(SmartEnum<>));
-            if (enumerationType is null)
-            {
-                return Array.Empty<string>();
-            }
 
             var listProperty = enumerationType
                 .GetProperty("List", BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
             var valueProperty = enumerationType.GetProperty("Value", typeof(int));
-            if (listProperty is null || valueProperty is null)
-            {
-                return Array.Empty<string>();
-            }
 
-            var enumerationObjects = listProperty.GetValue(null) as IEnumerable<object>;
+            var enumerationObjects = listProperty!.GetValue(null) as IEnumerable<object>;
             var enumerations = enumerationObjects!.Select(enumerationObject =>
                 new
                 {
-                    Id = (int)valueProperty.GetValue(enumerationObject)!,
+                    Id = (int)valueProperty!.GetValue(enumerationObject)!,
                     Name = enumerationObject.ToString(),
                 });
 

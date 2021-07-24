@@ -1,7 +1,6 @@
 using System;
 using System.CommandLine;
 using System.Linq;
-using Ardalis.SmartEnum;
 using LanceC.CommandLine.Parsing;
 
 namespace LanceC.CommandLine.Facts.Testing.Fakes
@@ -15,11 +14,22 @@ namespace LanceC.CommandLine.Facts.Testing.Fakes
 
     public static class FakeCommands
     {
+        private const string DefaultBreadcrumb = "testhost";
+
         public static Command Get(string breadcrumb)
+            => Get(breadcrumb, new FakeRootCommandOne());
+
+        public static Command GetWithoutGlobalOptions(string breadcrumb)
+            => Get(breadcrumb, new FakeRootCommandTwo());
+
+        public static Command GetWithHelpCommand()
+            => Get(DefaultBreadcrumb, new FakeRootCommandThree());
+
+        private static Command Get(string breadcrumb, Command rootCommand)
         {
             var breadcrumbParts = breadcrumb.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-            var command = (Command)FakeRootCommand.Instance;
+            var command = rootCommand;
             for (var i = 1; i < breadcrumbParts.Length; i++)
             {
                 var breadcrumbPart = breadcrumbParts[i];
@@ -32,133 +42,117 @@ namespace LanceC.CommandLine.Facts.Testing.Fakes
         }
     }
 
-    // Command instances must be properties (rather than static readonly fields) to allow for parallel test execution.
-    public static class FakeRootCommand
+    public class FakeRootCommandOne : RootCommand
     {
-        public static RootCommand Instance
+        public FakeRootCommandOne()
+            : base("Fake Executable")
         {
-            get
-            {
-                var command = new RootCommand("Fake Executable")
-                    {
-                        FakeSubGroupCommand.Instance,
-                        FakeCommandOne.Instance,
-                    };
-
-                command.AddGlobalOption(
-                    new Option(new[] { "-h", "/h", "--help", "-?", "/?", }, "Show help and usage information."));
-
-                return command;
-            }
+            AddCommand(new FakeSubGroupCommand());
+            AddCommand(new FakeCommandOne());
+            AddGlobalOption(new Option(new[] { "-h", "/h", "--help", "-?", "/?", }, "Show help and usage information."));
         }
     }
 
-    public static class FakeSubGroupCommand
+    public class FakeRootCommandTwo : RootCommand
     {
-        public static Command Instance
-            => new("sg", "Fake SubGroup")
-            {
-                FakeCommandTwo.Instance,
-                FakeCommandThree.Instance,
-                FakeCommandFour.Instance,
-            };
+        public FakeRootCommandTwo()
+            : base("Fake Executable")
+        {
+            AddCommand(new FakeSubGroupCommand());
+        }
     }
 
-    public static class FakeCommandOne
+    public class FakeRootCommandThree : RootCommand
     {
-        public static Command Instance
+        public FakeRootCommandThree()
+            : base("Fake Executable")
         {
-            get
-            {
-                var command = new Command("c1", "Fake Command One")
+            AddCommand(new FakeHelpCommand());
+        }
+    }
+
+    public class FakeSubGroupCommand : Command
+    {
+        public FakeSubGroupCommand()
+            : base("sg", "Fake SubGroup")
+        {
+            AddCommand(new FakeCommandTwo());
+            AddCommand(new FakeCommandThree());
+            AddCommand(new FakeCommandFour());
+        }
+    }
+
+    public class FakeCommandOne : Command
+    {
+        public FakeCommandOne()
+            : base("c1", "Fake Command One")
+        {
+            AddAlias("cone");
+
+            AddArgument(new Argument<int>("foo", "Foo"));
+            AddOption(
+                new Option<string>(new[] { "--bar", "-b", }, "Bar")
                 {
-                    new Argument<int>("foo", "Foo"),
-                    new Option<string>(new[] { "--bar", "-b", }, "Bar")
-                    {
-                        IsRequired = true,
-                    },
-                    new Option<double>(new[] { "--baz", }, "Baz"),
-                };
-
-                command.AddAlias("cone");
-
-                return command;
-            }
+                    IsRequired = true,
+                });
+            AddOption(new Option<double>("--baz", "Baz"));
         }
     }
 
-    public static class FakeCommandTwo
+    public class FakeCommandTwo : Command
     {
-        public static Command Instance
-            => new("c2", "Fake Command Two")
-            {
-                new Argument<int>("foo", "Foo"),
-                new Argument<bool>("bar", "Bar"),
-                new Argument<FakeEnum>("baz", "Baz"),
-                new Argument<FakeParsableSmartEnum>("qux", "Qux"),
+        public FakeCommandTwo()
+            : base("c2", "Fake Command Two")
+        {
+            AddArgument(new Argument<int>("foo", "Foo"));
+            AddArgument(new Argument<bool?>("bar", "Bar"));
+            AddArgument(new Argument<FakeEnum>("baz", "Baz"));
+            AddArgument(new Argument<ParsableSmartEnum<FakeSmartEnum>>("qux", "Qux"));
+            AddArgument(
                 new Argument<string>("hidden", "Hidden")
                 {
                     IsHidden = true,
-                },
-            };
+                });
+        }
     }
 
-    public static class FakeCommandThree
+    public class FakeCommandThree : Command
     {
-        public static Command Instance
-            => new("c3", "Fake Command Three")
-            {
+        public FakeCommandThree()
+            : base("c3", "Fake Command Three")
+        {
+            AddOption(
                 new Option<int>(new[] { "--foo", "-f" }, "Foo")
                 {
                     IsRequired = true,
-                },
-                new Option<bool>(new[] { "--bar", }, "Bar"),
-                new Option<FakeEnum>(new[] { "-b", }, "Baz"),
-                new Option<FakeParsableSmartEnum>(new[] { "--qux", }, "Qux"),
-                new Option<double>(new[] { "--hidden", }, "Hidden")
+                });
+            AddOption(new Option<bool>("--bar", "Bar"));
+            AddOption(new Option<FakeEnum?>("-b", "Baz"));
+            AddOption(new Option<ParsableSmartEnum<FakeSmartEnum>>("--qux", "Qux"));
+            AddOption(
+                new Option<double>("--hidden", "Hidden")
                 {
                     IsHidden = true,
-                },
-            };
-    }
-
-    public static class FakeCommandFour
-    {
-        public static Command Instance
-        {
-            get
-            {
-                var command = new Command("c4", "Fake Command Four")
-                {
-                    new Argument<int>("foo", "Foo"),
-                    new Option<int>(new[] { "--bar", }, "Bar"),
-                };
-
-                command.IsHidden = true;
-
-                return command;
-            }
+                });
         }
     }
 
-    public class FakeParsableSmartEnum : ParsableSmartEnum<FakeSmartEnum>
+    public class FakeCommandFour : Command
     {
-        public FakeParsableSmartEnum(string name)
-            : base(name)
+        public FakeCommandFour()
+            : base("c4", "Fake Command Four")
         {
+            IsHidden = true;
+
+            AddArgument(new Argument<int>("foo", "Foo"));
+            AddOption(new Option<int>("--bar", "Bar"));
         }
     }
 
-    public class FakeSmartEnum : SmartEnum<FakeSmartEnum>
+    public class FakeHelpCommand : Command
     {
-        public static readonly FakeSmartEnum Foo = new("Foo", 1);
-
-        public static readonly FakeSmartEnum Baz = new("Baz", 3);
-
-        public static readonly FakeSmartEnum Bar = new("Bar", 2);
-
-        private FakeSmartEnum(string name, int value)
-            : base(name, value)
+        public FakeHelpCommand()
+            : base("help", "Help")
         {
         }
     }
