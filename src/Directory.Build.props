@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <Import Project="../Directory.Build.props" />
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.GuardClauses" Version="3.*" />
+  </ItemGroup>
+
+</Project>

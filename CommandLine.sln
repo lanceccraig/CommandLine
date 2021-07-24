@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{93459849-DF5E-4632-9F60-042F19C6AFBB}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		.runsettings = .runsettings
+		Directory.Build.props = Directory.Build.props
+		stylecop.json = stylecop.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3B0CD070-6F8B-4276-8981-C957A263201D}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanceC.CommandLine", "src\CommandLine\LanceC.CommandLine.csproj", "{AD164FED-CEC5-4736-B890-650892E1DFAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{93A2E4E2-5792-463C-8AEF-112A6444A468}"
+	ProjectSection(SolutionItems) = preProject
+		tests\Directory.Build.props = tests\Directory.Build.props
+		tests\TestingSuppressions.cs = tests\TestingSuppressions.cs
+		tests\xunit.runner.json = tests\xunit.runner.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanceC.CommandLine.Facts", "tests\CommandLine.Facts\LanceC.CommandLine.Facts.csproj", "{1D683332-16D9-4A01-8FBE-EEFB60267707}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD164FED-CEC5-4736-B890-650892E1DFAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD164FED-CEC5-4736-B890-650892E1DFAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD164FED-CEC5-4736-B890-650892E1DFAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD164FED-CEC5-4736-B890-650892E1DFAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D683332-16D9-4A01-8FBE-EEFB60267707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D683332-16D9-4A01-8FBE-EEFB60267707}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D683332-16D9-4A01-8FBE-EEFB60267707}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D683332-16D9-4A01-8FBE-EEFB60267707}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AD164FED-CEC5-4736-B890-650892E1DFAE} = {3B0CD070-6F8B-4276-8981-C957A263201D}
+		{1D683332-16D9-4A01-8FBE-EEFB60267707} = {93A2E4E2-5792-463C-8AEF-112A6444A468}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F678227B-7783-4597-8671-FE278B9CF8B1}
+	EndGlobalSection
+EndGlobal
