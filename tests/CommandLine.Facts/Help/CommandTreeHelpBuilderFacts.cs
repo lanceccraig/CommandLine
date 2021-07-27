@@ -5,14 +5,14 @@ using Xunit;
 
 namespace LanceC.CommandLine.Facts.Help
 {
-    public class CustomHelpBuilderFacts
+    public class CommandTreeHelpBuilderFacts
     {
         private readonly FakeConsole _console = new();
 
-        private CustomHelpBuilder CreateSystemUnderTest()
+        private CommandTreeHelpBuilder CreateSystemUnderTest()
             => new(_console);
 
-        public class TheWriteMethod : CustomHelpBuilderFacts
+        public class TheWriteMethod : CommandTreeHelpBuilderFacts
         {
             [Fact]
             public void WritesSubGroupsAndSubCommandsForGroup()

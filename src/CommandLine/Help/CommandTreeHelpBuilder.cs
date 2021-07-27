@@ -8,23 +8,35 @@ using Ardalis.GuardClauses;
 
 namespace LanceC.CommandLine.Help
 {
-    public class CustomHelpBuilder : IHelpBuilder
+    /// <summary>
+    /// Provides help text generation builder for a command tree.
+    /// </summary>
+    public class CommandTreeHelpBuilder : IHelpBuilder
     {
         private const string RequiredTag = "[Required]";
         private const string AcceptedValuesLabel = "Accepted values";
         private const string AliasesLabel = "Aliases";
 
         private readonly IConsole _console;
-        private readonly CustomHelpBuilderOptions _options;
+        private readonly CommandTreeHelpBuilderOptions _options;
 
-        public CustomHelpBuilder(IConsole console, CustomHelpBuilderOptions? options = default)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommandTreeHelpBuilder"/> class.
+        /// </summary>
+        /// <param name="console">The console to write help text to.</param>
+        /// <param name="options">The help text generation options.</param>
+        public CommandTreeHelpBuilder(IConsole console, CommandTreeHelpBuilderOptions? options = default)
         {
             _console = console;
-            _options = options ?? new CustomHelpBuilderOptions();
+            _options = options ?? new CommandTreeHelpBuilderOptions();
         }
 
         private string Indent => new(' ', _options.IndentLength);
 
+        /// <summary>
+        /// Writes the help text for a command.
+        /// </summary>
+        /// <param name="command">The command to generate help text for.</param>
         public void Write(ICommand command)
         {
             Guard.Against.Null(command, nameof(command));

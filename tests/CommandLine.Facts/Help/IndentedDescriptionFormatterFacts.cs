@@ -6,7 +6,7 @@ namespace LanceC.CommandLine.Facts.Help
 {
     public class IndentedDescriptionFormatterFacts
     {
-        private static IndentedDescriptionFormatter CreateSystemUnderTest() => new(1, new CustomHelpBuilderOptions());
+        private static IndentedDescriptionFormatter CreateSystemUnderTest() => new(1, new CommandTreeHelpBuilderOptions());
 
         public class TheFormatMethod : IndentedDescriptionFormatterFacts
         {

@@ -4,6 +4,26 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageVersion>0.1.0</PackageVersion>
+    <Authors>Lance Craig</Authors>
+    <Title>Command Line</Title>
+    <Description>Provides base functionality for command line applications.</Description>
+    <Summary>Provides base functionality for command line applications.</Summary>
+    <PackageProjectUrl>https://github.com/lanceccraig/CommandLine</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/lanceccraig/CommandLine.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>Copyright @ Lance Craig</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageIcon>icon.png</PackageIcon>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DebugType>portable</DebugType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
     <InternalsVisibleTo Include="LanceC.CommandLine.Facts" />

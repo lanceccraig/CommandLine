@@ -15,7 +15,7 @@ namespace LanceC.CommandLine.Help
         private readonly string _paddedLine;
         private bool _usedSeparator;
 
-        public IndentedDescriptionFormatter(int firstColumnWidth, CustomHelpBuilderOptions options)
+        public IndentedDescriptionFormatter(int firstColumnWidth, CommandTreeHelpBuilderOptions options)
         {
             Guard.Against.Null(options, nameof(options));
 
