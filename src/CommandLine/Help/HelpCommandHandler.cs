@@ -25,5 +25,8 @@ namespace LanceC.CommandLine.Help
 
             return Task.FromResult<int>(CommandCode.Success);
         }
+
+        internal static ICommandHandler Create()
+            => CommandHandler.Create<InvocationContext>(context => new HelpCommandHandler().InvokeAsync(context));
     }
 }
