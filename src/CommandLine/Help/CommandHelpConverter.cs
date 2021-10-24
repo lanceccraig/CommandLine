@@ -152,11 +152,6 @@ namespace LanceC.CommandLine.Help
                 return Enum.GetNames(type);
             }
 
-            if (type == typeof(bool))
-            {
-                return new[] { "false", "true", };
-            }
-
             var parsableEnumerationType = type.GetInterfaces()
                 .FirstOrDefault(interfaceType =>
                     interfaceType.IsGenericType &&
