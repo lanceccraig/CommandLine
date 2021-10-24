@@ -189,9 +189,7 @@ namespace LanceC.CommandLine.Facts.Help
                         argument.Name == "bar" &&
                         argument.Description == "Bar" &&
                         !argument.IsHidden &&
-                        argument.AcceptedValues.Count == 2 &&
-                        argument.AcceptedValues.Count(acceptedValue => acceptedValue == "false") == 1 &&
-                        argument.AcceptedValues.Count(acceptedValue => acceptedValue == "true") == 1);
+                        !argument.AcceptedValues.Any());
                 Assert.Single(
                     commandHelp.Arguments,
                     argument =>
@@ -266,9 +264,7 @@ namespace LanceC.CommandLine.Facts.Help
                         !option.IsRequired &&
                         option.Aliases.Count == 1 &&
                         option.Aliases.Count(alias => alias == "--bar") == 1 &&
-                        option.AcceptedValues.Count == 2 &&
-                        option.AcceptedValues.Count(acceptedValue => acceptedValue == "false") == 1 &&
-                        option.AcceptedValues.Count(acceptedValue => acceptedValue == "true") == 1);
+                        !option.AcceptedValues.Any());
                 Assert.Single(
                     commandHelp.Options,
                     option =>
